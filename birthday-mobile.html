@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>🎉 18th Birthday Adventure 🎉</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        /* MOBILE-FIRST STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        html {
+            font-size: 16px;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+        }
+
+        /* Safe area for notched phones */
+        @supports (padding: max(0px)) {
+            body {
+                padding-left: min(0vmin, env(safe-area-inset-left));
+                padding-right: min(0vmin, env(safe-area-inset-right));
+            }
+        }
+
+        /* Mobile-friendly text sizes */
+        h1 { font-size: clamp(1.8rem, 6vw, 3.5rem); }
+        h2 { font-size: clamp(1.5rem, 5vw, 2.5rem); }
+        h3 { font-size: clamp(1.2rem, 4vw, 1.8rem); }
+        p { font-size: clamp(1rem, 3.5vw, 1.2rem); }
+
+        /* Background Animation - Optimized for mobile */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .floating-shapes .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            animation: float 20s infinite ease-in-out;
+            will-change: transform;
+        }
+
+        /* Simpler animations for better mobile performance */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            50% { transform: translateY(-10px) rotate(5deg) scale(1.02); }
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: clamp(10px, 3vmin, 20px);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header - Mobile Optimized */
+        .header {
+            text-align: center;
+            padding: clamp(15px, 4vmin, 30px) clamp(10px, 3vmin, 20px);
+            margin-bottom: clamp(15px, 4vmin, 30px);
+        }
+
+        .title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            margin-bottom: clamp(8px, 2vmin, 15px);
+            background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+            word-wrap: break-word;
+        }
+
+        .subtitle {
+            color: #a0a0c0;
+            max-width: 600px;
+            margin: 0 auto clamp(20px, 5vmin, 30px);
+            line-height: 1.5;
+        }
+
+        .age-display {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            padding: clamp(15px, 4vmin, 25px) clamp(25px, 6vmin, 40px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: clamp(10px, 3vmin, 20px);
+        }
+
+        .age-number {
+            font-size: clamp(3rem, 15vw, 5rem);
+            font-weight: 800;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+        }
+
+        .age-text {
+            color: #a0a0c0;
+            margin-top: clamp(5px, 1.5vmin, 10px);
+        }
+
+        /* Progress Indicator - Touch Friendly */
+        .progress-indicator {
+            display: flex;
+            justify-content: center;
+            gap: clamp(8px, 2vmin, 15px);
+            margin: clamp(15px, 4vmin, 25px) auto;
+            flex-wrap: wrap;
+            padding: 0 10px;
+        }
+
+        .progress-dot {
+            width: clamp(12px, 3.5vmin, 18px);
+            height: clamp(12px, 3.5vmin, 18px);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .progress-dot.active {
+            background: #feca57;
+            border-color: #feca57;
+            transform: scale(1.2);
+            box-shadow: 0 0 15px rgba(254, 202, 87, 0.5);
+        }
+
+        .progress-dot.completed {
+            background: #1dd1a1;
+            border-color: #1dd1a1;
+        }
+
+        /* Page Container - Mobile Optimized */
+        .page-container {
+            display: none;
+            min-height: calc(100vh - 150px);
+            animation: fadeIn 0.5s ease;
+            padding-bottom: clamp(20px, 6vmin, 40px);
+        }
+
+        .page-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Page Content - Touch Friendly */
+        .page-content {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: clamp(20px, 5vmin, 40px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 0 auto;
+            max-width: 800px;
+            animation: slideUp 0.6s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-icon {
+            font-size: clamp(4rem, 15vw, 6rem);
+            margin-bottom: clamp(20px, 5vmin, 30px);
+            color: #48dbfb;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .page-title {
+            margin-bottom: clamp(15px, 4vmin, 25px);
+            color: #feca57;
+            line-height: 1.3;
+        }
+
+        .page-description {
+            color: #a0a0c0;
+            line-height: 1.6;
+            margin-bottom: clamp(25px, 6vmin, 40px);
+        }
+
+        /* Interactive Elements - Mobile Touch Targets */
+        .interactive-area {
+            margin: clamp(25px, 6vmin, 40px) 0;
+            padding: clamp(20px, 5vmin, 30px);
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Balloons - Touch Optimized */
+        .balloon-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: clamp(15px, 4vmin, 25px);
+            margin: clamp(20px, 5vmin, 35px) 0;
+        }
+
+        .balloon {
+            width: clamp(70px, 20vw, 100px);
+            height: clamp(85px, 25vw, 120px);
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+            animation: floatBalloon 6s infinite ease-in-out;
+            transition: transform 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .balloon:hover, .balloon:active {
+            transform: scale(1.15);
+        }
+
+        .balloon-string {
+            position: absolute;
+            width: 2px;
+            height: clamp(60px, 18vw, 80px);
+            background: white;
+            bottom: clamp(-60px, -18vw, -80px);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        @keyframes floatBalloon {
+            0%, 100% { transform: translateY(0) rotate(-1deg); }
+            50% { transform: translateY(-25px) rotate(1deg); }
+        }
+
+        /* Gallery Grid - Mobile Responsive */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(150px, 45vw), 1fr));
+            gap: clamp(12px, 3vmin, 20px);
+            margin: clamp(20px, 5vmin, 35px) 0;
+        }
+
+        .photo-frame {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: clamp(15px, 4vmin, 25px);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: clamp(140px, 40vw, 180px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .photo-frame:active {
+            transform: scale(0.98);
+        }
+
+        .photo-icon {
+            font-size: clamp(2rem, 8vw, 3rem);
+            margin-bottom: clamp(10px, 3vmin, 15px);
+            color: #ff9ff3;
+        }
+
+        /* Buttons - Touch Friendly Size */
+        .unlock-container {
+            margin-top: clamp(30px, 8vmin, 50px);
+            padding-top: clamp(20px, 5vmin, 30px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .unlock-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ff9ff3);
+            color: white;
+            border: none;
+            padding: clamp(15px, 4vmin, 20px) clamp(30px, 8vmin, 50px);
+            font-size: clamp(1rem, 4vw, 1.2rem);
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(10px, 3vmin, 15px);
+            margin: 0 auto;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+            min-height: clamp(50px, 12vmin, 60px);
+            min-width: min(250px, 80vw);
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .unlock-btn:active:not(:disabled) {
+            transform: scale(0.95);
+            box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
+        }
+
+        .unlock-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Cake - Responsive */
+        .cake-container {
+            text-align: center;
+            margin: clamp(25px, 6vmin, 40px) 0;
+        }
+
+        .cake {
+            width: min(350px, 90vw);
+            height: auto;
+            aspect-ratio: 4/3;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .candle {
+            width: clamp(20px, 6vw, 30px);
+            height: clamp(50px, 15vw, 80px);
+            background: linear-gradient(to bottom, #ff9f43, #ff6b6b);
+            margin: 0 auto;
+            border-radius: 10px 10px 0 0;
+            position: relative;
+        }
+
+        .flame {
+            width: clamp(25px, 7vw, 35px);
+            height: clamp(35px, 10vw, 50px);
+            background: linear-gradient(to bottom, #ffd32a, #ff6b6b);
+            border-radius: 50% 50% 20% 20%;
+            margin: 0 auto;
+            position: relative;
+            top: -12px;
+            animation: flicker 1.5s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        /* Gift Grid - Mobile Responsive */
+        .gift-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(160px, 45vw), 1fr));
+            gap: clamp(15px, 4vmin, 25px);
+            margin: clamp(25px, 6vmin, 40px) 0;
+        }
+
+        .gift-box {
+            background: linear-gradient(135deg, #ff9ff3, #f368e0);
+            padding: clamp(20px, 5vmin, 30px) clamp(15px, 4vmin, 20px);
+            border-radius: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .gift-box:active {
+            transform: scale(0.98);
+        }
+
+        /* Message Container */
+        .message-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: clamp(20px, 5vmin, 30px);
+            margin: clamp(20px, 5vmin, 35px) auto;
+            max-width: 800px;
+            text-align: left;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        /* Surprise Box */
+        .surprise-box {
+            background: linear-gradient(135deg, #ffd32a, #ffa801);
+            padding: clamp(30px, 8vmin, 50px);
+            border-radius: 20px;
+            margin: clamp(25px, 6vmin, 40px) auto;
+            max-width: min(500px, 90vw);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .surprise-box:active {
+            transform: scale(0.98);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: clamp(20px, 5vmin, 30px) clamp(15px, 4vmin, 20px);
+            color: #a0a0c0;
+            margin-top: clamp(30px, 8vmin, 50px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-counter {
+            display: inline-flex;
+            align-items: center;
+            gap: clamp(8px, 2vmin, 12px);
+            background: rgba(255, 255, 255, 0.05);
+            padding: clamp(10px, 3vmin, 15px) clamp(15px, 4vmin, 25px);
+            border-radius: 50px;
+            margin-top: clamp(10px, 3vmin, 20px);
+        }
+
+        #clickCounter {
+            font-weight: 700;
+            color: #feca57;
+            font-size: clamp(1.1rem, 4vw, 1.3rem);
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            /* Larger touch targets on small screens */
+            .balloon, .photo-frame, .gift-box, .surprise-box {
+                min-height: 44px; /* Apple's minimum touch target size */
+                min-width: 44px;
+            }
+            
+            /* Adjust font sizes for very small screens */
+            html {
+                font-size: 14px;
+            }
+            
+            /* Prevent horizontal scrolling */
+            .page-content, .interactive-area {
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+            
+            /* Stack elements vertically on very small screens */
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (orientation: landscape) and (max-height: 500px) {
+            /* Landscape mode optimizations */
+            .header {
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+            
+            .age-display {
+                padding: 10px 20px;
+            }
+            
+            .page-content {
+                padding: 20px;
+            }
+            
+            .page-icon {
+                font-size: 3rem;
+                margin-bottom: 15px;
+            }
+        }
+
+        /* Prevent text selection on interactive elements */
+        .balloon, .photo-frame, .gift-box, .surprise-box, .unlock-btn {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* Loading indicator */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .loading.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-top: 5px solid #ff6b6b;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Swipe indicator for mobile */
+        .swipe-hint {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #a0a0c0;
+            display: none;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+
+        @media (max-width: 768px) {
+            .swipe-hint {
+                display: block;
+                animation: pulse 2s infinite;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading" id="loadingScreen">
+        <div class="spinner"></div>
+        <p>Loading Birthday Adventure...</p>
+    </div>
+
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="floating-shapes">
+            <div class="shape" style="width: 150px; height: 150px; top: 10%; left: 5%; background: radial-gradient(circle, rgba(120, 119, 198, 0.1) 0%, transparent 70%);"></div>
+            <div class="shape" style="width: 100px; height: 100px; top: 60%; right: 10%; background: radial-gradient(circle, rgba(255, 107, 107, 0.1) 0%, transparent 70%); animation-delay: -5s;"></div>
+            <div class="shape" style="width: 120px; height: 120px; bottom: 10%; left: 15%; background: radial-gradient(circle, rgba(72, 187, 120, 0.1) 0%, transparent 70%); animation-delay: -10s;"></div>
+        </div>
+    </div>
+
+    <!-- Swipe Hint (Mobile Only) -->
+    <div class="swipe-hint">
+        <i class="fas fa-arrow-up"></i> Swipe up to explore
+    </div>
+
+    <!-- Progress Indicator -->
+    <div class="progress-indicator" id="progressIndicator">
+        <div class="progress-dot active" data-page="1"></div>
+        <div class="progress-dot" data-page="2"></div>
+        <div class="progress-dot" data-page="3"></div>
+        <div class="progress-dot" data-page="4"></div>
+        <div class="progress-dot" data-page="5"></div>
+        <div class="progress-dot" data-page="6"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Page 1: Sky Adventure -->
+        <div class="page-container active" id="page1">
+            <div class="header">
+                <h1 class="title">18TH BIRTHDAY ADVENTURE</h1>
+                <p class="subtitle">Your interactive celebration begins here! Explore each page to unlock the next.</p>
+                <div class="age-display">
+                    <div class="age-number">18</div>
+                    <div class="age-text">Adventure Page 1/6</div>
+                </div>
+            </div>
+
+            <div class="page-content">
+                <div class="page-icon">
+                    <i class="fas fa-cloud"></i>
+                </div>
+                
+                <h2 class="page-title">Sky Adventure</h2>
+                
+                <p class="page-description">
+                    Welcome to your first adventure! At 18, the sky is no longer the limit. 
+                    Like these balloons soaring high, your journey into adulthood is about to take flight.
+                </p>
+                
+                <div class="interactive-area">
+                    <h3 style="color: #48dbfb; margin-bottom: 20px;">
+                        <i class="fas fa-compass"></i> Tap balloons to release your dreams
+                    </h3>
+                    
+                    <div class="balloon-container">
+                        <div class="balloon" data-dream="adventure" style="background: radial-gradient(circle at 30% 30%, #ff6b6b, #c44569);">
+                            <div class="balloon-string"></div>
+                        </div>
+                        <div class="balloon" data-dream="growth" style="background: radial-gradient(circle at 30% 30%, #48dbfb, #0abde3);">
+                            <div class="balloon-string"></div>
+                        </div>
+                        <div class="balloon" data-dream="success" style="background: radial-gradient(circle at 30% 30%, #feca57, #ff9f43);">
+                            <div class="balloon-string"></div>
+                        </div>
+                        <div class="balloon" data-dream="joy" style="background: radial-gradient(circle at 30% 30%, #1dd1a1, #10ac84);">
+                            <div class="balloon-string"></div>
+                        </div>
+                    </div>
+                    
+                    <div id="dreamMessages" style="margin-top: 30px; min-height: 100px;">
+                        <p style="color: #a0a0c0; font-style: italic; text-align: center;">Tap balloons to reveal messages...</p>
+                    </div>
+                </div>
+                
+                <div class="unlock-container">
+                    <p style="color: #a0a0c0; margin-bottom: 15px; text-align: center;">
+                        Explore this page fully to unlock the next adventure
+                    </p>
+                    <button class="unlock-btn" id="unlockPage2" disabled>
+                        <i class="fas fa-lock"></i> Unlock Next Adventure
+                    </button>
+                    <p id="page1Hint" style="color: #ff6b6b; margin-top: 10px; font-size: 0.9rem; text-align: center;">
+                        Hint: Tap all 4 balloons to continue
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 2: Memory Gallery -->
+        <div class="page-container" id="page2">
+            <div class="header">
+                <h1 class="title">MEMORY GALLERY</h1>
+                <p class="subtitle">Journey through 18 years of amazing memories</p>
+                <div class="age-display">
+                    <div class="age-number">18</div>
+                    <div class="age-text">Adventure Page 2/6</div>
+                </div>
+            </div>
+
+            <div class="page-content">
+                <div class="page-icon">
+                    <i class="fas fa-camera-retro"></i>
+                </div>
+                
+                <h2 class="page-title">Memory Gallery</h2>
+                
+                <p class="page-description">
+                    As you turn 18, take a moment to reflect on the journey so far. 
+                    Each year has brought unique experiences and growth.
+                </p>
+                
+                <div class="interactive-area">
+                    <h3 style="color: #ff9ff3; margin-bottom: 20px;">
+                        <i class="fas fa-images"></i> Tap memory frames to explore
+                    </h3>
+                    
+                    <div class="gallery-grid">
+                        <div class="photo-frame" data-year="1-3">
+                            <div class="photo-icon">
+                                <i class="fas fa-baby"></i>
+                            </div>
+                            <h3>Years 1-3</h3>
+                            <p>First steps, first words</p>
+                        </div>
+                        
+                        <div class="photo-frame" data-year="4-7">
+                            <div class="photo-icon">
+                                <i class="fas fa-child"></i>
+                            </div>
+                            <h3>Years 4-7</h3>
+                            <p>Discovering the world</p>
+                        </div>
+                        
+                        <div class="photo-frame" data-year="8-12">
+                            <div class="photo-icon">
+                                <i class="fas fa-school"></i>
+                            </div>
+                            <h3>Years 8-12</h3>
+                            <p>Learning and growing</p>
+                        </div>
+                        
+                        <div class="photo-frame" data-year="13-17">
+                            <div class="photo-icon">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                            <h3>Years 13-17</h3>
+                            <p>Finding your path</p>
+                        </div>
+                        
+                        <div class="photo-frame" data-year="18">
+                            <div class="photo-icon">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <h3>Year 18</h3>
+                            <p>Becoming an adult</p>
+                        </div>
+                    </div>
+                    
+                    <div id="memoryDetails" style="margin-top: 30px; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 15px; min-height: 100px;">
+                        <p style="color: #a0a0c0; font-style: italic; text-align: center;">Tap a memory frame to see details...</p>
+                    </div>
+                </div>
+                
+                <div class="unlock-container">
+                    <button class="unlock-btn" id="unlockPage3" disabled>
+                        <i class="fas fa-lock"></i> Unlock Special Surprise
+                    </button>
+                    <p id="page2Hint" style="color: #ff6b6b; margin-top: 10px; font-size: 0.9rem; text-align: center;">
+                        Hint: Tap all 5 memory frames to continue
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 3: Special Surprise -->
+        <div class="page-container" id="page3">
+            <div class="header">
+                <h1 class="title">SPECIAL SURPRISE</h1>
+                <p class="subtitle">Something magical awaits...</p>
+                <div class="age-display">
+                    <div class="age-number">18</div>
+                    <div class="age-text">Adventure Page 3/6</div>
+                </div>
+            </div>
+
+            <div class="page-content">
+                <div class="page-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                
+                <h2 class="page-title">Special Surprise</h2>
+                
+                <p class="page-description">
+                    You've reached the surprise chamber! Something incredible is waiting for you. 
+                    At 18, life is full of unexpected joys and magical moments.
+                </p>
+                
+                <div class="interactive-area">
+                    <h3 style="color: #ffd32a; margin-bottom: 20px;">
+                        <i class="fas fa-gem"></i> Tap the Magic Box to Reveal!
+                    </h3>
+                    
+                    <div class="surprise-box" id="magicBox">
+                        <h2 style="color: #000; margin-bottom: 15px; font-size: 1.8rem;">
+                            <i class="fas fa-gift"></i> SURPRISE INSIDE!
+                        </h2>
+                        <p style="color: #000; font-weight: 600;">
+                            Tap to reveal your special 18th birthday surprise!
+                        </p>
+                    </div>
+                    
+                    <div id="surpriseContent" style="display: none; margin-top: 30px; animation: fadeIn 1s ease;">
+                        <div style="background: linear-gradient(135deg, rgba(255,107,107,0.1), rgba(254,202,87,0.1)); padding: 30px; border-radius: 20px;">
+                            <h3 style="color: #feca57; margin-bottom: 15px;">
+                                <i class="fas fa-crown"></i> Congratulations!
+                            </h3>
+                            <p style="color: white; line-height: 1.6;">
+                                You've unlocked the <strong>Golden Key of Adulthood</strong>! This key symbolizes your 
+                                transition into a new chapter of life.
+                            </p>
+                            <div style="margin-top: 20px; font-size: 3rem; color: #feca57;">
+                                <i class="fas fa-key"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="unlock-container">
+                    <button class="unlock-btn" id="unlockPage4" disabled>
+                        <i class="fas fa-lock"></i> Unlock Secret Messages
+                    </button>
+                    <p id="page3Hint" style="color: #ff6b6b; margin-top: 10px; font-size: 0.9rem; text-align: center;">
+                        Hint: Tap the magic box to reveal the surprise
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 4: Secret Messages -->
+        <div class="page-container" id="page4">
+            <div class="header">
+                <h1 class="title">SECRET MESSAGES</h1>
+                <p class="subtitle">Personal notes for your special day</p>
+                <div class="age-display">
+                    <div class="age-number">18</div>
+                    <div class="age-text">Adventure Page 4/6</div>
+                </div>
+            </div>
+
+            <div class="page-content">
+                <div class="page-icon">
+                    <i class="fas fa-envelope-open-text"></i>
+                </div>
+                
+                <h2 class="page-title">Secret Messages</h2>
+                
+                <p class="page-description">
+                    Special messages await you on your 18th birthday. Each envelope contains 
+                    wisdom, encouragement, and good wishes for your journey ahead.
+                </p>
+                
+                <div class="interactive-area">
+                    <h3 style="color: #a29bfe; margin-bottom: 20px;">
+                        <i class="fas fa-envelope"></i> Tap to open messages
+                    </h3>
+                    
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 30px;">
+                        <div class="message-envelope" data-message="1" style="background: linear-gradient(135deg, #ff6b6b, #ff9ff3); padding: 20px; border-radius: 15px; width: 150px; text-align: center; cursor: pointer;">
+                            <div style="font-size: 2.5rem; margin-bottom: 10px;">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <h4 style="color: white;">Message #1</h4>
+                            <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Tap to open</p>
+                        </div>
+                        
+                        <div class="message-envelope" data-message="2" style="background: linear-gradient(135deg, #48dbfb, #0abde3); padding: 20px; border-radius: 15px; width: 150px; text-align: center; cursor: pointer;">
+                            <div style="font-size: 2.5rem; margin-bottom: 10px;">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h4 style="color: white;">Message #2</h4>
+                            <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Tap to open</p>
+                        </div>
+                        
+                        <div class="message-envelope" data-message="3" style="background: linear-gradient(135deg, #1dd1a1, #10ac84); padding: 20px; border-radius: 15px; width: 150px; text-align: center; cursor: pointer;">
+                            <div style="font-size: 2.5rem; margin-bottom: 10px;">
+                                <i class="fas fa-compass"></i>
+                            </div>
+                            <h4 style="color: white;">Message #3</h4>
+                            <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Tap to open</p>
+                        </div>
+                    </div>
+                    
+                    <div id="messageDisplay" class="message-container">
+                        <p style="color: #a0a0c0; font-style: italic; text-align: center;">
+                            Select a message envelope to read its contents...
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="unlock-container">
+                    <button class="unlock-btn" id="unlockPage5" disabled>
+                        <i class="fas fa-lock"></i> Unlock Birthday Cake
+                    </button>
+                    <p id="page4Hint" style="color: #ff6b6b; margin-top: 10px; font-size: 0.9rem; text-align: center;">
+                        Hint: Read all 3 secret messages to continue
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 5: Birthday Cake -->
+        <div class="page-container" id="page5">
+            <div class="header">
+                <h1 class="title">BIRTHDAY CAKE</h1>
+                <p class="subtitle">Make a wish and blow out the candles!</p>
+                <div class="age-display">
+                    <div class="age-number">18</div>
+                    <div class="age-text">Adventure Page 5/6</div>
+                </div>
+            </div>
+
+            <div class="page-content">
+                <div class="page-icon">
+                    <i class="fas fa-birthday-cake"></i>
+                </div>
+                
+                <h2 class="page-title">Birthday Cake</h2>
+                
+                <p class="page-description">
+                    No birthday is complete without cake! This virtual cake has 18 magical candles. 
+                    Make your wish and blow them out to continue your adventure.
+                </p>
+                
+                <div class="interactive-area">
+                    <h3 style="color: #ff9f43; margin-bottom: 20px;">
+                        <i class="fas fa-fire"></i> Make a wish and blow out the candles
+                    </h3>
+                    
+                    <div class="cake-container">
+                        <div class="cake">
+                            <div class="candle">
+                                <div class="flame" id="cakeFlame"></div>
+                            </div>
+                            <div class="cake-body"></div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 30px; text-align: center;">
+                        <button class="unlock-btn" id="blowCandles" style="background: linear-gradient(135deg, #ff9f43, #ff6b6b);">
+                            <i class="fas fa-wind"></i> Blow Out Candles
+                        </button>
+                        
+                        <div id="wishMessage" style="margin-top: 25px; padding: 20px; background: rgba(255, 159, 67, 0.1); border-radius: 15px; display: none;">
+                            <h4 style="color: #feca57; margin-bottom: 10px;">
+                                <i class="fas fa-magic"></i> Your wish has been made!
+                            </h4>
+                            <p style="color: white;">
+                                Your secret wish for your 18th year has been recorded. May it come true!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="unlock-container">
+                    <button class="unlock-btn" id="unlockPage6" disabled>
+                        <i class="fas fa-lock"></i> Unlock Final Gifts
+                    </button>
+                    <p id="page5Hint" style="color: #ff6b6b; margin-top: 10px; font-size: 0.9rem; text-align: center;">
+                        Hint: Blow out the candles to make your wish
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 6: Surprise Gifts -->
+        <div class="page-container" id="page6">
+            <div class="header">
+                <h1 class="title">SURPRISE GIFTS</h1>
+                <p class="subtitle">Your final adventure awaits!</p>
+                <div class="age-display">
+                    <div class="age-number">18</div>
+                    <div class="age-text">Adventure Page 6/6</div>
+                </div>
+            </div>
+
+            <div class="page-content">
+                <div class="page-icon">
+                    <i class="fas fa-gift"></i>
+                </div>
+                
+                <h2 class="page-title">Surprise Gifts</h2>
+                
+                <p class="page-description">
+                    Congratulations! You've completed your 18th birthday adventure. 
+                    As a reward, here are special virtual gifts for your journey ahead.
+                </p>
+                
+                <div class="interactive-area">
+                    <h3 style="color: #ff9ff3; margin-bottom: 20px;">
+                        <i class="fas fa-box-open"></i> Tap to open your final gifts
+                    </h3>
+                    
+                    <div class="gift-grid">
+                        <div class="gift-box" data-gift="adventure">
+                            <h3><i class="fas fa-map-marked-alt"></i> Adventure Pass</h3>
+                            <p>Unlimited exploration ahead</p>
+                        </div>
+                        
+                        <div class="gift-box" data-gift="wisdom">
+                            <h3><i class="fas fa-graduation-cap"></i> Wisdom Key</h3>
+                            <p>Knowledge for your journey</p>
+                        </div>
+                        
+                        <div class="gift-box" data-gift="courage">
+                            <h3><i class="fas fa-shield-alt"></i> Courage Shield</h3>
+                            <p>Strength for challenges</p>
+                        </div>
+                        
+                        <div class="gift-box" data-gift="joy">
+                            <h3><i class="fas fa-laugh-beam"></i> Joy Generator</h3>
+                            <p>Endless happiness</p>
+                        </div>
+                    </div>
+                    
+                    <div id="finalMessage" style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, rgba(72,219,251,0.1), rgba(29,209,161,0.1)); border-radius: 20px; display: none;">
+                        <h2 style="color: #48dbfb; margin-bottom: 15px;">
+                            <i class="fas fa-trophy"></i> Adventure Complete!
+                        </h2>
+                        <p style="color: white; line-height: 1.6; margin-bottom: 20px;">
+                            You've successfully navigated all 6 adventures of your 18th birthday celebration! 
+                        </p>
+                        <p style="color: #feca57; font-weight: 600;">
+                            Remember: At 18, the world is yours to explore. Happy Birthday!
+                        </p>
+                        
+                        <div style="margin-top: 30px; font-size: 4rem; color: #ff6b6b; animation: bounce 2s infinite;">
+                            <i class="fas fa-birthday-cake"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="unlock-container">
+                    <button class="unlock-btn" id="showFinale" style="background: linear-gradient(135deg, #1dd1a1, #10ac84);">
+                        <i class="fas fa-flag-checkered"></i> Complete Adventure
+                    </button>
+                    <p id="page6Hint" style="color: #ff6b6b; margin-top: 10px; font-size: 0.9rem; text-align: center;">
+                        Hint: Open all gifts to see the final celebration
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Designed exclusively for an amazing 18th birthday celebration</p>
+            <div class="footer-counter">
+                <i class="fas fa-heart"></i>
+                <span id="clickCounter">0</span> interactions made
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Script -->
+    <script>
+        // Game State
+        const gameState = {
+            currentPage: 1,
+            balloonsClicked: 0,
+            memoriesViewed: 0,
+            surpriseRevealed: false,
+            messagesRead: 0,
+            candlesBlown: false,
+            giftsOpened: 0,
+            totalClicks: 0
+        };
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide loading screen after a short delay
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.remove('active');
+            }, 1000);
+            
+            updateProgressIndicator();
+            updateClickCounter();
+            
+            // Setup touch events for mobile
+            setupTouchEvents();
+            
+            // Initialize all pages
+            setupPage1();
+            setupPage2();
+            setupPage3();
+            setupPage4();
+            setupPage5();
+            setupPage6();
+            
+            // Play background music if on desktop
+            if (!isMobile()) {
+                const bgMusic = new Audio('https://assets.mixkit.co/music/preview/mixkit-happy-day-583.mp3');
+                bgMusic.volume = 0.3;
+                bgMusic.loop = true;
+                bgMusic.play().catch(e => console.log("Music autoplay prevented"));
+            }
+        });
+
+        // Check if device is mobile
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // Setup touch events for better mobile interaction
+        function setupTouchEvents() {
+            // Add touch feedback to all interactive elements
+            const interactiveElements = document.querySelectorAll('.balloon, .photo-frame, .gift-box, .surprise-box, .message-envelope, .unlock-btn');
+            
+            interactiveElements.forEach(el => {
+                el.addEventListener('touchstart', function() {
+                    this.style.opacity = '0.8';
+                });
+                
+                el.addEventListener('touchend', function() {
+                    this.style.opacity = '1';
+                });
+            });
+        }
+
+        function updateProgressIndicator() {
+            const dots = document.querySelectorAll('.progress-dot');
+            dots.forEach(dot => {
+                const pageNum = parseInt(dot.dataset.page);
+                dot.classList.remove('active', 'completed');
+                
+                if (pageNum === gameState.currentPage) {
+                    dot.classList.add('active');
+                } else if (pageNum < gameState.currentPage) {
+                    dot.classList.add('completed');
+                }
+                
+                // Make dots clickable to navigate
+                dot.addEventListener('click', function() {
+                    const targetPage = parseInt(this.dataset.page);
+                    if (targetPage <= gameState.currentPage) {
+                        goToPage(targetPage);
+                    }
+                });
+            });
+        }
+
+        function updateClickCounter() {
+            document.getElementById('clickCounter').textContent = gameState.totalClicks;
+        }
+
+        function playSound(soundName) {
+            if (!isMobile()) { // Limit sounds on mobile to save data
+                const sounds = {
+                    click: 'https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3',
+                    celebration: 'https://assets.mixkit.co/sfx/preview/mixkit-party-horn-sound-2935.mp3',
+                    pop: 'https://assets.mixkit.co/sfx/preview/mixkit-balloon-pop-2928.mp3'
+                };
+                
+                const audio = new Audio(sounds[soundName] || sounds.click);
+                audio.volume = 0.3;
+                audio.play().catch(e => console.log("Sound play prevented"));
+            }
+        }
+
+        function goToPage(pageNum) {
+            if (pageNum <= gameState.currentPage) {
+                // Hide all pages
+                document.querySelectorAll('.page-container').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Show target page
+                const targetPage = document.getElementById(`page${pageNum}`);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                    targetPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    
+                    // Update click counter
+                    gameState.totalClicks++;
+                    updateClickCounter();
+                    
+                    // Play sound
+                    playSound('click');
+                }
+            }
+        }
+
+        function unlockNextPage() {
+            gameState.currentPage++;
+            updateProgressIndicator();
+            goToPage(gameState.currentPage);
+        }
+
+        // Page 1 Functions
+        function setupPage1() {
+            const balloons = document.querySelectorAll('#page1 .balloon');
+            const unlockBtn = document.getElementById('unlockPage2');
+            const dreamMessages = document.getElementById('dreamMessages');
+            
+            const dreamTexts = {
+                adventure: "Adventure awaits! At 18, you have the freedom to explore new paths and discover your passions.",
+                growth: "Personal growth continues! This year will bring new insights and maturity.",
+                success: "Success is on the horizon! Your hard work will open doors to new opportunities.",
+                joy: "Joy will follow you! Remember to celebrate small victories along the way."
+            };
+            
+            let revealedDreams = [];
+            
+            balloons.forEach(balloon => {
+                balloon.addEventListener('click', function() {
+                    const dream = this.dataset.dream;
+                    
+                    if (!revealedDreams.includes(dream)) {
+                        revealedDreams.push(dream);
+                        
+                        // Visual effect
+                        this.style.transform = 'translateY(-80px) scale(1.2)';
+                        this.style.opacity = '0.7';
+                        this.style.transition = 'all 1s ease';
+                        
+                        // Play sound
+                        playSound('pop');
+                        
+                        // Show message
+                        const messageDiv = document.createElement('div');
+                        messageDiv.style.cssText = `
+                            background: rgba(72, 219, 251, 0.1);
+                            padding: 12px;
+                            border-radius: 10px;
+                            margin: 8px 0;
+                            border-left: 4px solid #48dbfb;
+                            animation: fadeIn 0.5s ease;
+                        `;
+                        messageDiv.innerHTML = `
+                            <strong style="color: #48dbfb;">${dream.charAt(0).toUpperCase() + dream.slice(1)}:</strong>
+                            <span style="color: white;"> ${dreamTexts[dream]}</span>
+                        `;
+                        dreamMessages.appendChild(messageDiv);
+                        
+                        // Update game state
+                        gameState.balloonsClicked++;
+                        gameState.totalClicks++;
+                        updateClickCounter();
+                        
+                        // Check if all balloons clicked
+                        if (revealedDreams.length === 4) {
+                            unlockBtn.disabled = false;
+                            unlockBtn.innerHTML = '<i class="fas fa-unlock"></i> Unlock Next Adventure';
+                            unlockBtn.style.background = 'linear-gradient(135deg, #1dd1a1, #10ac84)';
+                            document.getElementById('page1Hint').style.color = '#1dd1a1';
+                            document.getElementById('page1Hint').innerHTML = '✓ All balloons released! Tap to continue';
+                        }
+                    }
+                });
+            });
+            
+            unlockBtn.addEventListener('click', unlockNextPage);
+        }
+
+        // Page 2 Functions
+        function setupPage2() {
+            const memoryFrames = document.querySelectorAll('#page2 .photo-frame');
+            const unlockBtn = document.getElementById('unlockPage3');
+            const memoryDetails = document.getElementById('memoryDetails');
+            
+            const memoryTexts = {
+                '1-3': "Your earliest years - full of discovery, first experiences, and laying the foundation for who you would become.",
+                '4-7': "The preschool and early school years - making first friends, learning rapidly, and developing your unique personality.",
+                '8-12': "Middle childhood - exploring interests, developing skills, and beginning to understand the world more deeply.",
+                '13-17': "The teenage years - a period of significant growth, self-discovery, and preparation for adulthood.",
+                '18': "This special year - the transition to adulthood, with new freedoms, responsibilities, and opportunities."
+            };
+            
+            let viewedMemories = [];
+            
+            memoryFrames.forEach(frame => {
+                frame.addEventListener('click', function() {
+                    const year = this.dataset.year;
+                    
+                    if (!viewedMemories.includes(year)) {
+                        viewedMemories.push(year);
+                        
+                        // Visual effect
+                        this.style.transform = 'scale(1.05)';
+                        this.style.boxShadow = '0 10px 25px rgba(255, 255, 255, 0.2)';
+                        
+                        // Play sound
+                        playSound('click');
+                        
+                        // Show details
+                        memoryDetails.innerHTML = `
+                            <h4 style="color: #ff9ff3; margin-bottom: 10px;">
+                                <i class="fas fa-history"></i> Years ${year}
+                            </h4>
+                            <p style="color: white; line-height: 1.6;">
+                                ${memoryTexts[year]}
+                            </p>
+                        `;
+                        
+                        // Update game state
+                        gameState.memoriesViewed++;
+                        gameState.totalClicks++;
+                        updateClickCounter();
+                        
+                        // Check if all memories viewed
+                        if (viewedMemories.length === 5) {
+                            unlockBtn.disabled = false;
+                            unlockBtn.innerHTML = '<i class="fas fa-unlock"></i> Unlock Special Surprise';
+                            unlockBtn.style.background = 'linear-gradient(135deg, #ffd32a, #ffa801)';
+                            document.getElementById('page2Hint').style.color = '#1dd1a1';
+                            document.getElementById('page2Hint').innerHTML = '✓ All memories explored! Tap to continue';
+                        }
+                    }
+                });
+            });
+            
+            unlockBtn.addEventListener('click', unlockNextPage);
+        }
+
+        // Page 3 Functions
+        function setupPage3() {
+            const magicBox = document.getElementById('magicBox');
+            const unlockBtn = document.getElementById('unlockPage4');
+            const surpriseContent = document.getElementById('surpriseContent');
+            
+            magicBox.addEventListener('click', function() {
+                if (!gameState.surpriseRevealed) {
+                    gameState.surpriseRevealed = true;
+                    
+                    // Visual effect
+                    this.style.transform = 'scale(1.1)';
+                    this.style.background = 'linear-gradient(135deg, #feca57, #ff9f43)';
+                    this.innerHTML = `
+                        <h2 style="color: #000; margin-bottom: 15px; font-size: 1.8rem;">
+                            <i class="fas fa-gem"></i> SURPRISE REVEALED!
+                        </h2>
+                        <p style="color: #000; font-weight: 600;">
+                            Check below for your special gift!
+                        </p>
+                    `;
+                    
+                    // Show surprise content
+                    surpriseContent.style.display = 'block';
+                    
+                    // Play sound
+                    playSound('celebration');
+                    
+                    // Update game state
+                    gameState.totalClicks++;
+                    updateClickCounter();
+                    
+                    // Enable unlock button
+                    setTimeout(() => {
+                        unlockBtn.disabled = false;
+                        unlockBtn.innerHTML = '<i class="fas fa-unlock"></i> Unlock Secret Messages';
+                        unlockBtn.style.background = 'linear-gradient(135deg, #a29bfe, #6c5ce7)';
+                        document.getElementById('page3Hint').style.color = '#1dd1a1';
+                        document.getElementById('page3Hint').innerHTML = '✓ Surprise revealed! Tap to continue';
+                    }, 1000);
+                }
+            });
+            
+            unlockBtn.addEventListener('click', unlockNextPage);
+        }
+
+        // Page 4 Functions
+        function setupPage4() {
+            const messageEnvelopes = document.querySelectorAll('.message-envelope');
+            const unlockBtn = document.getElementById('unlockPage5');
+            const messageDisplay = document.getElementById('messageDisplay');
+            
+            const messages = {
+                1: "Happy 18th Birthday! This milestone marks the beginning of an exciting new chapter. Embrace the freedom and responsibility that comes with adulthood, but never lose your sense of wonder and curiosity.",
+                2: "At 18, you stand at the threshold of infinite possibilities. Remember that every experience - both successes and challenges - contributes to the person you're becoming. Trust your journey.",
+                3: "As you embark on this adult journey, carry with you the lessons of the past 18 years. Your unique perspective, talents, and dreams are your greatest assets. The world is ready for your contribution."
+            };
+            
+            let readMessages = [];
+            
+            messageEnvelopes.forEach(envelope => {
+                envelope.addEventListener('click', function() {
+                    const messageNum = this.dataset.message;
+                    
+                    if (!readMessages.includes(messageNum)) {
+                        readMessages.push(messageNum);
+                        
+                        // Visual effect
+                        this.style.transform = 'translateY(-10px)';
+                        this.innerHTML = `
+                            <div style="font-size: 2.5rem; margin-bottom: 10px; color: white;">
+                                <i class="fas fa-envelope-open"></i>
+                            </div>
+                            <h4 style="color: white;">Message #${messageNum}</h4>
+                            <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Opened!</p>
+                        `;
+                        
+                        // Play sound
+                        playSound('click');
+                        
+                        // Display message
+                        messageDisplay.innerHTML = `
+                            <div style="padding: 15px;">
+                                <h4 style="color: #a29bfe; margin-bottom: 10px;">
+                                    <i class="fas fa-quote-left"></i> Secret Message #${messageNum}
+                                </h4>
+                                <p style="color: white; line-height: 1.6;">
+                                    ${messages[messageNum]}
+                                </p>
+                                <div style="text-align: right; margin-top: 15px; color: #a0a0c0;">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                            </div>
+                        `;
+                        
+                        // Update game state
+                        gameState.messagesRead++;
+                        gameState.totalClicks++;
+                        updateClickCounter();
+                        
+                        // Check if all messages read
+                        if (readMessages.length === 3) {
+                            unlockBtn.disabled = false;
+                            unlockBtn.innerHTML = '<i class="fas fa-unlock"></i> Unlock Birthday Cake';
+                            unlockBtn.style.background = 'linear-gradient(135deg, #ff9f43, #ff6b6b)';
+                            document.getElementById('page4Hint').style.color = '#1dd1a1';
+                            document.getElementById('page4Hint').innerHTML = '✓ All messages read! Tap to continue';
+                        }
+                    }
+                });
+            });
+            
+            unlockBtn.addEventListener('click', unlockNextPage);
+        }
+
+        // Page 5 Functions
+        function setupPage5() {
+            const blowBtn = document.getElementById('blowCandles');
+            const unlockBtn = document.getElementById('unlockPage6');
+            const flame = document.getElementById('cakeFlame');
+            const wishMessage = document.getElementById('wishMessage');
+            
+            blowBtn.addEventListener('click', function() {
+                if (!gameState.candlesBlown) {
+                    gameState.candlesBlown = true;
+                    
+                    // Visual effect
+                    flame.style.animation = 'none';
+                    flame.style.transform = 'scale(0)';
+                    flame.style.opacity = '0';
+                    flame.style.transition = 'all 0.5s ease';
+                    
+                    // Play sound
+                    playSound('click');
+                    
+                    // Show wish message
+                    wishMessage.style.display = 'block';
+                    
+                    // Update button
+                    this.innerHTML = '<i class="fas fa-check"></i> Wish Made!';
+                    this.style.background = 'linear-gradient(135deg, #1dd1a1, #10ac84)';
+                    
+                    // Update game state
+                    gameState.totalClicks++;
+                    updateClickCounter();
+                    
+                    // Enable unlock button
+                    setTimeout(() => {
+                        unlockBtn.disabled = false;
+                        unlockBtn.innerHTML = '<i class="fas fa-unlock"></i> Unlock Final Gifts';
+                        unlockBtn.style.background = 'linear-gradient(135deg, #ff9ff3, #f368e0)';
+                        document.getElementById('page5Hint').style.color = '#1dd1a1';
+                        document.getElementById('page5Hint').innerHTML = '✓ Wish made! Tap to continue';
+                    }, 1000);
+                }
+            });
+            
+            unlockBtn.addEventListener('click', unlockNextPage);
+        }
+
+        // Page 6 Functions
+        function setupPage6() {
+            const giftBoxes = document.querySelectorAll('#page6 .gift-box');
+            const showFinaleBtn = document.getElementById('showFinale');
+            const finalMessage = document.getElementById('finalMessage');
+            
+            giftBoxes.forEach(box => {
+                box.addEventListener('click', function() {
+                    const gift = this.dataset.gift;
+                    
+                    if (!this.classList.contains('opened')) {
+                        this.classList.add('opened');
+                        
+                        // Visual effect
+                        this.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1))';
+                        this.innerHTML = `
+                            <h3><i class="fas fa-check-circle"></i> ${this.querySelector('h3').textContent}</h3>
+                            <p>Opened and ready for use!</p>
+                            <div style="margin-top: 10px; font-size: 1.8rem; color: #feca57;">
+                                <i class="fas fa-box-open"></i>
+                            </div>
+                        `;
+                        
+                        // Play sound
+                        playSound('click');
+                        
+                        // Update game state
+                        gameState.giftsOpened++;
+                        gameState.totalClicks++;
+                        updateClickCounter();
+                        
+                        // Check if all gifts opened
+                        if (gameState.giftsOpened === 4) {
+                            showFinaleBtn.style.background = 'linear-gradient(135deg, #ff6b6b, #ff9ff3)';
+                            document.getElementById('page6Hint').style.color = '#1dd1a1';
+                            document.getElementById('page6Hint').innerHTML = '✓ All gifts opened! Tap to complete';
+                        }
+                    }
+                });
+            });
+            
+            showFinaleBtn.addEventListener('click', function() {
+                // Show final message
+                finalMessage.style.display = 'block';
+                
+                // Update button
+                this.innerHTML = '<i class="fas fa-trophy"></i> Adventure Complete!';
+                this.style.background = 'linear-gradient(135deg, #48dbfb, #0abde3)';
+                this.disabled = true;
+                
+                // Play celebration sound
+                playSound('celebration');
+                
+                // Create confetti effect
+                createConfetti();
+                
+                // Update game state
+                gameState.totalClicks++;
+                updateClickCounter();
+            });
+        }
+
+        // Confetti Effect - Mobile Optimized
+        function createConfetti() {
+            const colors = ['#ff6b6b', '#feca57', '#48dbfb', '#1dd1a1', '#ff9ff3', '#a29bfe'];
+            const confettiCount = isMobile() ? 80 : 150; // Less confetti on mobile
+            
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.cssText = `
+                    position: fixed;
+                    width: 10px;
+                    height: 10px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    top: -20px;
+                    left: ${Math.random() * 100}vw;
+                    border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
+                    animation: fall ${Math.random() * 3 + 2}s linear forwards;
+                    z-index: 9999;
+                    pointer-events: none;
+                `;
+                
+                document.body.appendChild(confetti);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    if (confetti.parentNode) {
+                        confetti.remove();
+                    }
+                }, 5000);
+            }
+            
+            // Add CSS for fall animation if not already present
+            if (!document.querySelector('#confetti-style')) {
+                const style = document.createElement('style');
+                style.id = 'confetti-style';
+                style.textContent = `
+                    @keyframes fall {
+                        to {
+                            transform: translateY(100vh) rotate(${Math.random() * 360}deg);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+
+        // Add fadeIn animation to CSS
+        const fadeInStyle = document.createElement('style');
+        fadeInStyle.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+        `;
+        document.head.appendChild(fadeInStyle);
+    </script>
+</body>
+</html>
